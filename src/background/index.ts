@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
           type: chrome.declarativeNetRequest.RuleActionType.BLOCK
         },
         condition: {
-          urlFilter: "advertisement",
+          urlFilter: "advertisement|\\bads\\b|adst",
           resourceTypes: [
             chrome.declarativeNetRequest.ResourceType.XMLHTTPREQUEST, 
             chrome.declarativeNetRequest.ResourceType.SUB_FRAME
