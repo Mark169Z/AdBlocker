@@ -1,0 +1,33 @@
+# dependencies
+/node_modules
+
+# production build
+/dist
+
+# logs
+npm-debug.log*
+
+# system files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# environment files
+.env
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional: Mac trash folder
+.Trashes
+
+# Optional: Linux trash folder
+*~ 

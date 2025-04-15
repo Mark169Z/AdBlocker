@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Simple Ad Blocker",
+    "version": "1.0",
+    "description": "A simple ad blocker built with TypeScript.",
+    "permissions": [
+      "webRequest",
+      "webRequestBlocking",
+      "declarativeNetRequest",
+      "declarativeNetRequestWithHostAccess",
+      "storage"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "index.html"
+    },
+    "content_scripts":[
+        {
+            "matches": ["<all_urls>"],
+            "js": ["contentScript.js"]
+        }
+    ]
+  }
