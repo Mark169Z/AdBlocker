@@ -1,14 +1,35 @@
-function checkAndRemoveAdsAndGifs() {
+let adBlockerEnabled = true;
+const hiddenElements = new Set();
+
+function hideElement(element) {
+  if (!hiddenElements.has(element)) {
+    element.style.setProperty('display', 'none', 'important');
+    hiddenElements.add(element);
+  }
+}
+
+function showHiddenElements() {
+  hiddenElements.forEach(element => {
+    if (element && element.style) {
+      element.style.removeProperty('display');
+    }
+  });
+  hiddenElements.clear();
+}
+
+function checkAndHideAdsAndGifs() {
+  if (!adBlockerEnabled) return;
+
   // Expanded keyword list
   const keywords = ['ads', 'advertisement', 'adskeeper', 't.ly', '2ly', 'adst', 'adqva', '_adqva_', 'ph-inpage'];
   
   // Directly target known ad containers
-  document.querySelectorAll('div[class*="AdQVA"]').forEach(el => el.remove());
-  document.querySelectorAll('div[class*="adqva"]').forEach(el => el.remove());
+  document.querySelectorAll('div[class*="AdQVA"]').forEach(el => hideElement(el));
+  document.querySelectorAll('div[class*="adqva"]').forEach(el => hideElement(el));
   
   // More thorough attribute checking
   document.querySelectorAll('*').forEach(element => {
-    let shouldRemove = false;
+    let shouldHide = false;
 
     // Check image sources for GIFs
     if (element instanceof HTMLImageElement) {
@@ -16,68 +37,115 @@ function checkAndRemoveAdsAndGifs() {
       const srcset = element.srcset?.toLowerCase() || '';
       const currentSrc = element.currentSrc?.toLowerCase() || '';
       if (src.endsWith('.gif') || srcset.includes('.gif') || currentSrc.includes('.gif')) {
-        shouldRemove = true;
+        shouldHide = true;
       }
     }
 
     // Check background-image styles
     const bgImage = getComputedStyle(element).backgroundImage.toLowerCase();
     if (bgImage.includes('.gif')) {
-      shouldRemove = true;
+      shouldHide = true;
     }
 
     // Check class names more thoroughly
     const className = typeof element.className === 'string' ? element.className.toLowerCase() : '';
     if (keywords.some(keyword => className.includes(keyword))) {
-      shouldRemove = true;
+      shouldHide = true;
     }
 
     // Check element ID
     const id = element.id?.toLowerCase() || '';
     if (keywords.some(keyword => id.includes(keyword))) {
-      shouldRemove = true;
+      shouldHide = true;
     }
 
     // Check all attributes
     for (const attr of element.attributes) {
       const attrValue = attr.value.toLowerCase();
       if (keywords.some(keyword => attrValue.includes(keyword))) {
-        shouldRemove = true;
+        shouldHide = true;
         break;
       }
     }
 
-    // Remove element if flagged
-    if (shouldRemove) {
-      element.remove();
+    // Hide element if flagged
+    if (shouldHide) {
+      hideElement(element);
     }
   });
 }
 
 // Also check for elements with specific structures that might be ads
-function removeSpecificAdStructures() {
+function hideSpecificAdStructures() {
+  if (!adBlockerEnabled) return;
+
   // Target ad units directly by their structure
-  document.querySelectorAll('div._AdQVA_widget_ads, div._AdQVA_ad_unit').forEach(el => el.remove());
+  document.querySelectorAll('div._AdQVA_widget_ads, div._AdQVA_ad_unit').forEach(el => hideElement(el));
   
   // Look for iframes that might contain ads
   document.querySelectorAll('iframe').forEach(iframe => {
     const src = iframe.src?.toLowerCase() || '';
     if (src.includes('ads') || src.includes('advert') || src.includes('banner')) {
-      iframe.remove();
+      hideElement(iframe);
     }
   });
 }
 
 function handleDOMUpdate() {
-  checkAndRemoveAdsAndGifs();
-  removeSpecificAdStructures();
+  if (adBlockerEnabled) {
+    checkAndHideAdsAndGifs();
+    hideSpecificAdStructures();
+  }
 }
 
-// Run immediately and set up observers
-handleDOMUpdate();
+// Initialize observer
+let observer = null;
 
-const observer = new MutationObserver(handleDOMUpdate);
-observer.observe(document.body, { childList: true, subtree: true });
+function setupObserver() {
+  if (adBlockerEnabled) {
+    if (!observer) {
+      observer = new MutationObserver(handleDOMUpdate);
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  } else if (observer) {
+    observer.disconnect();
+    observer = null;
+  }
+}
 
-window.addEventListener('DOMContentLoaded', handleDOMUpdate);
-window.addEventListener('load', handleDOMUpdate);
+// Load the current state from storage
+chrome.storage.sync.get(['adBlockerEnabled'], (result) => {
+  adBlockerEnabled = result.adBlockerEnabled !== false; // Default to true if not set
+  
+  if (adBlockerEnabled) {
+    handleDOMUpdate();
+    setupObserver();
+  }
+});
+
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === 'toggleAdBlocker') {
+    adBlockerEnabled = message.enabled;
+    
+    if (adBlockerEnabled) {
+      handleDOMUpdate(); // Clean up immediately when enabled
+      setupObserver();
+    } else {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      showHiddenElements(); // Show previously hidden elements
+    }
+  }
+  return true;
+});
+
+// Set up initial event listeners
+window.addEventListener('DOMContentLoaded', () => {
+  if (adBlockerEnabled) handleDOMUpdate();
+});
+window.addEventListener('load', () => {
+  if (adBlockerEnabled) handleDOMUpdate();
+});
