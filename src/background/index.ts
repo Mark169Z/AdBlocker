@@ -4,22 +4,76 @@ chrome.runtime.onInstalled.addListener(() => {
       {
         id: 1,
         priority: 1,
-        action: {
-          type: chrome.declarativeNetRequest.RuleActionType.BLOCK
-        },
+        action: { type: "block" },
         condition: {
           urlFilter: "advertisement|\\bads\\b|adst",
-          resourceTypes: [
-            chrome.declarativeNetRequest.ResourceType.XMLHTTPREQUEST, 
-            chrome.declarativeNetRequest.ResourceType.SUB_FRAME
-          ]
+          resourceTypes: ["xmlhttprequest", "sub_frame", "media"]
+        }
+      },
+      {
+        id: 2,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "||googles.video/",
+          resourceTypes: ["media"]
+        }
+      },
+      {
+        id: 3,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "*://*/source/weplay.mp4",
+          resourceTypes: ["media"]
+        }
+      },
+      {
+        id: 4,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "*://*/banner/*.gif",
+          resourceTypes: ["image"]
+        }
+      },
+      {
+        id: 5,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "*://*/banner/*.png",
+          resourceTypes: ["image"]
+        }
+      },
+      {
+        id: 6,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "*://*/banner/*.webp",
+          resourceTypes: ["image"]
+        }
+      },
+      {
+        id: 7,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "*://*/banner/*.jpg",
+          resourceTypes: ["image"]
+        }
+      },
+      {
+        id: 8,
+        priority: 1,
+        action: { type: "block" },
+        condition: {
+          urlFilter: "*://s-img.adskeeper.com/",
+          resourceTypes: ["image"]
         }
       }
     ],
-    removeRuleIds: [1]
+    removeRuleIds: [1, 2, 3, 4, 5, 6, 7, 8]
   });
 });
-
-export {};
-
-  export {};
