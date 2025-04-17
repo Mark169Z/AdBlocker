@@ -1,6 +1,7 @@
 function checkAndRemoveAdsAndGifs() {
   // Expanded keyword list
-  const keywords = ['ads', 'advertisement', 'adskeeper', 't.ly', '2ly', 'adst', 'adqva', '_adqva_', 'ph-inpage'];
+  const keywords = ['adt','advertisement', 'adskeeper', 't.ly', '2ly', 'adst', 'adqva', '_adqva_', 'ph-inpage'];
+  const regexAds = /\bad\b/;
   
   // Directly target known ad containers
   document.querySelectorAll('div[class*="AdQVA"]').forEach(el => el.remove());
@@ -41,7 +42,7 @@ function checkAndRemoveAdsAndGifs() {
     // Check all attributes
     for (const attr of element.attributes) {
       const attrValue = attr.value.toLowerCase();
-      if (keywords.some(keyword => attrValue.includes(keyword))) {
+      if (keywords.some(keyword => attrValue.includes(keyword) || regexAds.test(attrValue))) {
         shouldRemove = true;
         break;
       }
