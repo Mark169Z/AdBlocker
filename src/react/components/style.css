@@ -1,0 +1,115 @@
+/* AdBlocker Popup Styles */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f8f9fa;
+    --text-color: #333;
+    --toggle-active: #4caf50;
+    --toggle-inactive: #ccc;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary-color);
+  }
+  
+  .popup-container {
+    width: 100px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    text-align: center;
+  }
+  
+  .title {
+    color: var(--primary-color);
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  /* .description {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 14px;
+  } */
+  
+  .status-indicator {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  
+  .status-active {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--toggle-active);
+  }
+  
+  .status-inactive {
+    background-color: rgba(204, 204, 204, 0.2);
+    color: #888;
+  }
+  
+  /* Toggle Switch Styles */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--toggle-inactive);
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: var(--toggle-active);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px var(--toggle-active);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  

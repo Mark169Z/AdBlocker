@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import './style.css';
 export default function App() {
     const [isAdBlockerEnabled, setIsAdBlockerEnabled] = useState(true);
 
@@ -29,26 +29,14 @@ export default function App() {
         });
     };
     return (
-        <main>
-            <h1>Ad Blocker</h1>
-             <p>Toggle the switch to enable or disable the ad blocker.</p>
-             <label className="switch">
-                 <input type="checkbox" checked={isAdBlockerEnabled} onChange={handleToggle} />
-                 <span className="slider round"></span>
-             </label>
-        </main>
+        <main className="popup-container">
+            <h1 className="title">AdBlocker</h1>
+            <div className="status-indicator" style={{ display: 'flex', justifyContent: 'center' }}>
+                <label className="switch">
+                    <input type="checkbox" checked={isAdBlockerEnabled} onChange={handleToggle} />
+                    <span className="slider round"></span>
+                </label>
+            </div>
+        </main>    
     );
 }
-
-//     return (
-//         <main>
-//             <h1>Ad Blocker</h1>
-//             <p>Toggle the switch to enable or disable the ad blocker.</p>
-//             <label className="switch">
-//                 <input type="checkbox" checked={isAdBlockerEnabled} onChange={handleToggle} />
-//                 <span className="slider round"></span>
-//             </label>
-//             <p>{isAdBlockerEnabled ? 'Ad Blocker is enabled' : 'Ad Blocker is disabled'}</p>
-//         </main>
-//     );
-// }
