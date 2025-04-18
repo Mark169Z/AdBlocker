@@ -41,6 +41,18 @@ module.exports = {
                         ]
                     }
                 }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                type: 'asset/resource'
+            },
+            {
+                test: /\.svg$/,
+                type: 'asset/inline'
             }
         ]
     },

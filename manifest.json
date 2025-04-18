@@ -9,6 +9,8 @@
       "declarativeNetRequest",
       "declarativeNetRequestWithHostAccess",
       "storage",
+      "scripting",
+      "tabs",
       "proxy"
     ],
     "host_permissions": [
