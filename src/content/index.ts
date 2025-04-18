@@ -86,7 +86,7 @@ function hideSpecificAdStructures() {
   // Look for iframes that might contain ads
   document.querySelectorAll('iframe').forEach(iframe => {
     const src = iframe.src?.toLowerCase() || '';
-    if (src.includes('ads') || src.includes('advert') || src.includes('banner')) {
+    if ( src.includes('advert') || src.includes('banner')) {
       hideElement(iframe);
     }
   });
