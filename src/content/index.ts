@@ -150,3 +150,4 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
   if (adBlockerEnabled) handleDOMUpdate();
 });
+
