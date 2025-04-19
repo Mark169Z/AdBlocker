@@ -83,7 +83,7 @@ function updateBlockingRules(enabled) {
           action: { type: "block" },
           condition: {
             urlFilter: "*://t.ly/",
-            resourceTypes: ["image"]
+            resourceTypes: ["main_frame"]
           }
         },
         {
@@ -92,7 +92,7 @@ function updateBlockingRules(enabled) {
           action: { type: "block" },
           condition: {
             urlFilter: "*://2ly.link/",
-            resourceTypes: ["image"]
+            resourceTypes: ["main_frame"]
           }
         },
         {
@@ -101,7 +101,7 @@ function updateBlockingRules(enabled) {
           action: { type: "block" },
           condition: {
             urlFilter: "*://cutt.ly/",
-            resourceTypes: ["image"]
+            resourceTypes: ["main_frame"]
           }
         },
         {

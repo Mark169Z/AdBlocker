@@ -1,34 +1,40 @@
 {
-    "manifest_version": 3,
-    "name": "Simple Ad Blocker",
-    "version": "1.0",
-    "description": "A simple ad blocker built with TypeScript.",
-    "permissions": [
-      "webRequest",
-      "webRequestBlocking",
-      "declarativeNetRequest",
-      "declarativeNetRequestWithHostAccess",
-      "storage",
-      "scripting",
-      "tabs",
-      "proxy"
-    ],
-    "host_permissions": [
-      "<all_urls>"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_popup": "index.html"
-    },
-    "content_scripts":[
-        {
-            "matches": ["<all_urls>"],
-            "exclude_matches": [
-              "https://www.google.com/*"
-          ],
-            "js": ["contentScript.js"]
-        }
-    ]
+  "manifest_version": 3,
+  "name": "Simple Ad Blocker",
+  "version": "1.0",
+  "description": "A simple ad blocker built with TypeScript.",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "storage",
+    "scripting",
+    "tabs",
+    "proxy"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://www.google.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
+}
