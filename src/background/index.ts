@@ -76,14 +76,77 @@ function updateBlockingRules(enabled) {
             urlFilter: "*://s-img.adskeeper.com/",
             resourceTypes: ["image"]
           }
+        },
+        {
+          id: 9,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://t.ly/",
+            resourceTypes: ["image"]
+          }
+        },
+        {
+          id: 10,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://2ly.link/",
+            resourceTypes: ["image"]
+          }
+        },
+        {
+          id: 11,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://cutt.ly/",
+            resourceTypes: ["image"]
+          }
+        },
+        {
+          id: 12,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://pgslot99.de/",
+            resourceTypes: ["image"]
+          }
+        },
+        {
+          id: 13,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://allbet24hr.win/",
+            resourceTypes: ["image"]
+          }
+        },
+        {
+          id: 14,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://www.anime-sugoi.com/pic/webp/",
+            resourceTypes: ["image"]
+          }
+        },
+        {
+          id: 15,
+          priority: 1,
+          action: { type: "block" },
+          condition: {
+            urlFilter: "*://cdn.adsok.co/storage/default-ads",
+            resourceTypes: ["image"]
+          }
         }
       ],
-      removeRuleIds: [1, 2, 3, 4, 5, 6, 7, 8]
+      removeRuleIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     });
   } else {
     // Remove all rules when disabled
     chrome.declarativeNetRequest.updateDynamicRules({
-      removeRuleIds: [1, 2, 3, 4, 5, 6, 7, 8],
+      removeRuleIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       addRules: []
     });
   }
